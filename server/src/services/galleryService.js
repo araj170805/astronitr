@@ -11,6 +11,7 @@ export const uploadImageService = async (
     description,
     image,
     uploadedBy,
+    isApproved: true,
   });
 };
 

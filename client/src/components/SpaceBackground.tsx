@@ -403,9 +403,9 @@ function useStarfield(
       }
       if (ptr.k > 0.01) {
         ctx.globalCompositeOperation = 'lighter';
-        const g = ctx.createRadialGradient(ptr.x, ptr.y, 0, ptr.x, ptr.y, 280);
-        g.addColorStop(0, `rgba(255,255,255,${(0.07 * ptr.k).toFixed(3)})`);
-        g.addColorStop(0.5, `rgba(255,255,255,${(0.02 * ptr.k).toFixed(3)})`);
+        const g = ctx.createRadialGradient(ptr.x, ptr.y, 0, ptr.x, ptr.y, 220);
+        g.addColorStop(0, `rgba(255,255,255,${(0.03 * ptr.k).toFixed(3)})`);
+        g.addColorStop(0.5, `rgba(255,255,255,${(0.01 * ptr.k).toFixed(3)})`);
         g.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = g;
         ctx.fillRect(0, 0, w, h);
@@ -428,15 +428,15 @@ function useStarfield(
         const y = py + (dy / d) * near * 9;
         const tw = reduce ? 0.85 : 0.55 + 0.45 * Math.sin(t * s.sp + s.tw);
         const flash = reduce ? 0 : Math.pow(Math.max(0, Math.sin(t * s.sp * 0.9 + s.tw * 3)), 14);
-        const a = Math.min(1, (0.2 + s.z * 0.7) * tw + near * 0.6 + flash * 0.5);
+        const a = Math.min(1, (0.2 + s.z * 0.7) * tw + near * 0.3 + flash * 0.5);
         const col = mix(s.hue, CURSOR_TINT, Math.min(1, near * 0.9));
-        const r = s.r * (1 + near * 1.3 + flash * 0.6);
+        const r = s.r * (1 + near * 0.8 + flash * 0.6);
         ctx.beginPath();
         ctx.fillStyle = `rgba(${col},${a.toFixed(3)})`;
         ctx.arc(x, y, r, 0, Math.PI * 2);
         ctx.fill();
-        if (s.z > 0.9 || near > 0.2) {
-          const gr = s.r * 6 * (1 + near);
+        if (s.z > 0.9 || near > 0.4) {
+          const gr = s.r * 6 * (1 + near * 0.6);
           const g = ctx.createRadialGradient(x, y, 0, x, y, gr);
           g.addColorStop(0, `rgba(${col},${(a * 0.4).toFixed(3)})`);
           g.addColorStop(1, `rgba(${col},0)`);
@@ -445,7 +445,7 @@ function useStarfield(
           ctx.arc(x, y, gr, 0, Math.PI * 2);
           ctx.fill();
         }
-        const fs = (s.z > 0.6 ? s.r * 2.2 : 0) + flash * s.r * 9 + near * 12;
+        const fs = (s.z > 0.6 ? s.r * 2.2 : 0) + flash * s.r * 9 + near * 7;
         if (fs > 1.4) sparkle(ctx, x, y, fs, `rgba(${col},${(a * 0.8).toFixed(3)})`);
       }
       if (!reduce) {
